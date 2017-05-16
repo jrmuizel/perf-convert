@@ -1,2 +1,10 @@
-To convert
+This uses hacked up version of stackcollapse-perf.pl to parse the output of perf script
+It would be better if we just had a parser for the perf script output in js
+
+To convert:
 $ perf script | stackcollapse-perf.pl | node convert.js
+
+A cool features of this is:
+$ perf script | stackcollapse-perf.pl --inline | node convert.js
+
+which will give full stacks (maybe broken) for inlined functions using addr2line
