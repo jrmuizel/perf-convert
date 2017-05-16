@@ -1,0 +1,2 @@
+To convert
+$ perf script | stackcollapse-perf.pl | node convert.js

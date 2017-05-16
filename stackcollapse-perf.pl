@@ -250,7 +250,7 @@ while (defined($_ = <>)) {
 				# fall through to $tidy_java
 			}
 
-			if ($tidy_java and $pname eq "java") {
+			#if ($tidy_java and $pname eq "java") {
 				# along with $tidy_generic, converts the following:
 				#	Lorg/mozilla/javascript/ContextFactory;.call(Lorg/mozilla/javascript/ContextAction;)Ljava/lang/Object;
 				#	Lorg/mozilla/javascript/ContextFactory;.call(Lorg/mozilla/javascript/C
@@ -259,8 +259,8 @@ while (defined($_ = <>)) {
 				#	org/mozilla/javascript/ContextFactory:.call
 				#	org/mozilla/javascript/ContextFactory:.call
 				#	org/mozilla/javascript/MemberBox:.init
-				$func =~ s/^L// if $func =~ m:/:;
-			}
+				#	$func =~ s/^L// if $func =~ m:/:;
+				#}
 
 			$func .= "_[i]" if scalar(@inline) > 0; #inlined
 			push @inline, $func;
