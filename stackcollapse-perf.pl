@@ -75,7 +75,7 @@ sub remember_stack {
 my $annotate_kernel = 0; # put an annotation on kernel function
 my $include_pname = 1;	# include process names in stacks
 my $include_pid = 0;	# include process ID with process name
-my $include_tid = 0;	# include process & thread ID with process name
+my $include_tid = 1;	# include process & thread ID with process name
 my $tidy_java = 1;	# condense Java signatures
 my $tidy_generic = 1;	# clean up function names a little
 my $target_pname;	# target process name from perf invocation
