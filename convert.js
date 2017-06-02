@@ -86,7 +86,9 @@ function _convertThreads(profile) {
   let time = 0;
   for (const line of profile.split('\n')) {
     const lineParts = line.split(';');
-    const [threadName, tid] = lineParts.shift().split('/');
+    const threadParts = lineParts.shift().split('/');
+    let threadName = threadParts[0];
+    let tid = threadParts[1];
     if (!tid) {
       continue;
     }
