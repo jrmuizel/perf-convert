@@ -135,7 +135,7 @@ my @stack;
 my $pname;
 my $m_pid;
 my $m_tid;
-
+my @inlined;
 #
 # Main loop
 #
@@ -160,6 +160,15 @@ while (defined($_ = <>)) {
 
 	# end of stack. save cached data.
 	if (m/^$/) {
+		my $first;
+		if (@stack) {
+			$first = shift @stack;
+		}
+		unshift @stack, @inlined;
+		@inlined = ();
+		if ($first) {
+			unshift @stack, $first;
+		}
 		if ($include_pname) {
 			if (defined $pname) {
 				unshift @stack, $pname;
@@ -207,6 +216,15 @@ while (defined($_ = <>)) {
 	#
 	} elsif (/^\s*(\w+)\s*(.+) \((\S*)\)/) {
 		my ($pc, $rawfunc, $mod) = ($1, $2, $3);
+		my $first;
+		if (@stack) {
+			$first = shift @stack;
+		}
+		unshift @stack, @inlined;
+		@inlined = ();
+		if ($first) {
+			unshift @stack, $first;
+		}
 
 		# Linux 4.8 included symbol offsets in perf script output by default, eg:
 		# 7fffb84c9afc cpu_startup_entry+0x800047c022ec ([kernel.kallsyms])
@@ -267,6 +285,9 @@ while (defined($_ = <>)) {
 		}
 
 		unshift @stack, @inline;
+	} elsif (/^\s*(.+)/) {
+		my ($rawfuncd) = ($1);
+		unshift @inlined, $rawfuncd;
 	} else {
 		warn "Unrecognized line: $_";
 	}
